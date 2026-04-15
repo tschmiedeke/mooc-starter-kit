@@ -1,0 +1,107 @@
+# weekly-digest.yml
+#
+# Module 3, video C2: the cloud-detect side of the hybrid pattern.
+# Runs the staged pipeline (scripts/pipeline/) against sample-docs/ on a
+# weekly schedule and commits the resulting digest back to the repo.
+#
+# This is pedagogical, not production. Read the inline comments — they
+# explain what each step does and why.
+
+name: weekly-digest
+
+# When does this run?
+on:
+  # Every Monday at 09:00 UTC. Pick a quiet hour so you're not fighting
+  # GitHub Actions rate limits with the rest of the world.
+  schedule:
+    - cron: '0 9 * * 1'
+  # Also let a human trigger it from the Actions tab. Useful for testing
+  # without waiting a week.
+  workflow_dispatch:
+
+# Minimum permissions. We need to read the repo and write a commit back.
+permissions:
+  contents: write
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Pull the repo down onto the runner.
+      - name: checkout
+        uses: actions/checkout@v4
+
+      # 2. Install Node so we can install the Claude Code CLI.
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. Install the Claude Code CLI globally on the runner.
+      - name: install claude code
+        run: npm install -g @anthropic-ai/claude-code
+
+      # 4. Check whether the API key secret exists. We don't want the
+      #    workflow to nag students who haven't set ANTHROPIC_API_KEY in
+      #    their fork's secrets — we just write a stub digest and exit
+      #    that step cleanly. Secret hygiene (video C1): never echo the
+      #    key, never log it, never commit it.
+      - name: check for api key
+        id: check_key
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+            echo "has_key=false" >> "$GITHUB_OUTPUT"
+            echo "no ANTHROPIC_API_KEY secret set — will write a stub digest"
+          else
+            echo "has_key=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # 5a. Real run: secret is set, run the full pipeline.
+      - name: run pipeline
+        if: steps.check_key.outputs.has_key == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          cd scripts/pipeline
+          chmod +x ./*.sh
+          ./run-all.sh
+
+      # 5b. Stub run: secret is missing, write a stable placeholder.
+      #     "Stable" matters — same content every run — so the next step
+      #     doesn't see a diff and create a self-triggering commit loop.
+      - name: write stub digest
+        if: steps.check_key.outputs.has_key == 'false'
+        run: |
+          mkdir -p output
+          cat > output/digest-stub.md <<'STUB'
+          # Beat digest — stub
+
+          This file exists because the workflow ran without an
+          `ANTHROPIC_API_KEY` secret. Add one in your fork:
+
+              Settings → Secrets and variables → Actions → New repository secret
+              Name: ANTHROPIC_API_KEY
+              Value: your key from console.anthropic.com
+
+          Then re-run the workflow from the Actions tab.
+          STUB
+
+      # 6. Commit the digest back to the branch — but only if there's a
+      #    real change. The `git diff --quiet` check prevents empty
+      #    commits and the commit-loop trap from video C2.
+      - name: commit digest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add output/
+          if git diff --staged --quiet; then
+            echo "no changes to commit"
+            exit 0
+          fi
+          git commit -m "weekly-digest: update output"
+          git push
