@@ -1,0 +1,7 @@
+{
+  "name": "mooc-beat-toolkit",
+  "version": "0.1.0",
+  "description": "Minimal plugin skeleton for the MOOC starter kit. Shows the shape of a plugin that bundles skills, commands, and hooks for a journalism beat.",
+  "author": "Joe Amditis",
+  "homepage": "https://mooc.amditis.tech"
+}
