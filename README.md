@@ -1,6 +1,6 @@
 # Advanced prompt engineering for journalists — starter kit
 
-A starter repo for the [Knight Center](https://knightcenter.utexas.edu/) MOOC on using AI coding tools from the command line. Fork this repo, clone your fork, and use it as your workspace for all four modules.
+A starter repo for the [Knight Center](https://knightcenter.utexas.edu/) MOOC on using AI coding tools from the command line. Fork this repo, clone your fork, `cd` into it, and run `claude`. Everything you need for the four modules is already here.
 
 **Course site:** [mooc.amditis.tech](https://mooc.amditis.tech)
 
@@ -16,26 +16,30 @@ A starter repo for the [Knight Center](https://knightcenter.utexas.edu/) MOOC on
 
 ## What this repo is
 
-This is your workspace for the course. It contains:
+Your workspace for all four modules. By the end of the course, it'll be a working AI-assisted journalism toolkit you've filled in with your own beat details — documented, version-controlled, and shareable.
 
-- A **starter context file** (`CLAUDE.md`) with placeholder sections you'll customize for your beat
-- **Sample journalism documents** you'll use in exercises (press releases, meeting minutes, interview notes)
-- **Skill templates** you'll modify and extend in Module 2
-- **Starter scripts** for the pipeline exercise in Module 3
-- **MCP configuration examples** for connecting AI to your documents in Module 4
-- An **empty archive folder** where you'll add documents for the Module 4 RAG exercise
+- A **context file scaffold** (`CLAUDE.md`) with teaching comments and a fully worked example
+- **Memory and lessons files** (`MEMORY.md`, `LESSONS.md`) showing the patterns from video A2
+- **Real Claude Code skills** (`skills/`) with YAML frontmatter — the shape from video B1
+- **Slash commands** (`.claude/commands/`) for beat briefings, SIFT-based claim checks, and cross-model review
+- **A one-way-door hook** (`.claude/hooks.json`) — the guardrail pattern
+- **A minimal plugin skeleton** (`plugin/`) — the shape from video B2
+- **Staged pipeline scripts** (`scripts/pipeline/`) — the fetch → clean → process → save pattern
+- **A GitHub Actions workflow** (`.github/workflows/weekly-digest.yml`) — the cloud-detect side of the hybrid pattern
+- **Module 4 documentation** (`docs/context-management.md`, `docs/cross-model-review.md`, `docs/four-questions.md`)
+- **A worked mini example** (`examples/mamdani-mini/`) — the shape of the video B1 pipeline demo with synthetic data
+- **Sample journalism documents** (`sample-docs/`) — fictional Greenfield city council beat fixtures
+- **Stubs for Codex and Gemini users** (`AGENTS.md`, `GEMINI.md`) — if you're not using Claude
 
-By the end of the course, this repo will be a working AI-assisted journalism toolkit — documented, version-controlled, and shareable.
+Everything in the repo maps to a specific module and video in [docs/module-map.md](docs/module-map.md). Start there if you want the index.
 
 ## Getting started
 
 ### 1. Fork this repo
 
-Click the **Fork** button at the top right of this page. This creates your own copy on GitHub that you can push to freely.
+Click **Fork** at the top right of the GitHub page. That gives you your own copy you can push to freely.
 
 ### 2. Clone your fork
-
-Open a terminal and run:
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/mooc-starter-kit.git
@@ -44,70 +48,128 @@ cd mooc-starter-kit
 
 Replace `YOUR-USERNAME` with your GitHub username.
 
-### 3. Install the tools
+### 3. Install one AI CLI tool
 
-You need [Node.js](https://nodejs.org/) (version 20+) and at least one AI CLI tool:
+You need Node.js (version 20+) and one of these:
 
 | Tool | Install | Cost |
 |------|---------|------|
-| **Gemini CLI** | `npm install -g @google/gemini-cli` | Free (1,000 req/day with Google account) |
-| **Claude Code** | `npm install -g @anthropic-ai/claude-code` | Requires Claude Max ($20/mo) or API key |
-| **Codex CLI** | `npm install -g @openai/codex` | Requires OpenAI API key |
+| **Claude Code** | `npm install -g @anthropic-ai/claude-code` | Requires a Claude subscription or API key |
+| **Gemini CLI** | `npm install -g @google/gemini-cli` | Free tier: 1,000 requests/day with a Google account |
+| **Codex CLI** | `npm install -g @openai/codex` | Requires an OpenAI API key |
 
-The course exercises use Claude Code, but the concepts apply to all three tools.
+The course exercises are shown in Claude Code. The patterns work in all three tools. If you're using Codex, see `AGENTS.md`. If you're using Gemini, see `GEMINI.md`.
 
-### 4. Start the first exercise
+### 4. Run it
 
-Open the [Module 1 exercise](https://mooc.amditis.tech/module-1/) on the course site and follow the instructions.
+```bash
+cd mooc-starter-kit
+claude
+```
+
+Your first session should be boring on purpose — say hi, type `/init` (if you're in Claude Code) and see what it does, read `CLAUDE.md`, and then pick up the [Module 1 exercise](https://mooc.amditis.tech/module-1/) on the course site.
+
+## Which module uses what
+
+| Module | Week | Read this | Work with these files |
+|--------|------|-----------|------------------------|
+| **Module 1 — From chat window to command line** | 1 | Videos A1, A2 | `CLAUDE.md`, `MEMORY.md`, `LESSONS.md`, `examples/worked-claude-md/`, `sample-docs/` |
+| **Module 2 — Custom skills, commands, hooks, plugins** | 2 | Videos B1, B2 | `skills/`, `.claude/commands/`, `.claude/hooks.json`, `plugin/` |
+| **Module 3 — Automation, pipelines, triggered workflows** | 3 | Videos C1, C2 | `scripts/pipeline/`, `.github/workflows/`, `examples/mamdani-mini/` |
+| **Module 4 — Advanced prompting patterns** | 4 | Videos D1, D2, D3, D4 | `docs/context-management.md`, `docs/cross-model-review.md`, `docs/four-questions.md` |
+| **Final project** | 4 | — | Build something on your beat using anything in the kit |
+
+See [docs/module-map.md](docs/module-map.md) for the full file-to-video index.
 
 ## What's in each folder
 
 ```
 mooc-starter-kit/
 |
-|-- CLAUDE.md               <-- Your context file (Module 1)
-|                                Edit this with your beat, style rules, and source standards.
-|                                Claude reads it at the start of every session.
+|-- CLAUDE.md                   Project context scaffold (Module 1)
+|-- MEMORY.md                   Memory index: four memory types
+|-- LESSONS.md                  Rolling log where corrections become rules
+|-- AGENTS.md                   Codex users read this
+|-- GEMINI.md                   Gemini users read this
 |
-|-- sample-docs/             <-- Sample journalism documents (Module 1)
+|-- sample-docs/                Greenfield city council beat fixtures
 |   |-- council-minutes-excerpt.md
 |   |-- press-release-park-closure.md
 |   |-- interview-notes-martinez.md
 |   |-- tip-email.md
+|   |-- viral-claim-example.md
 |   |-- sample-article.html
-|   |-- sample-transcript.txt
-|   +-- viral-claim-example.md
+|   +-- sample-transcript.txt
 |
-|-- skills/                  <-- Skill templates (Module 2)
-|   |-- my-first-skill.md        A minimal template to copy and customize
-|   +-- newsroom-style.md        A complete AP style skill with examples
+|-- .claude/                    Commands and hooks Claude Code auto-loads
+|   |-- commands/
+|   |   |-- beat-brief.md       /beat-brief
+|   |   |-- cross-review.md     /cross-review
+|   |   +-- verify-claim.md     /verify-claim
+|   |-- hooks.json              One-way-door guardrail
+|   +-- hooks.md                What the hook is for
 |
-|-- scripts/                 <-- Starter shell scripts (Module 3)
-|   |-- summarize-article.sh     Single-file summarization
-|   +-- batch-process.sh         Multi-file batch processing
+|-- skills/                     Real Claude Code skills (Module 2)
+|   |-- newsroom-style/
+|   |   +-- SKILL.md
+|   +-- first-skill/
+|       +-- SKILL.md
 |
-|-- mcp-configs/             <-- MCP configuration examples (Module 4)
-|   |-- filesystem-example.json  Example config for connecting Claude to local files
-|   +-- README.md                How MCP configuration works
+|-- plugin/                     Minimal plugin skeleton (Module 2)
+|   |-- plugin.json
+|   +-- skills/
+|       +-- beat-brief/
+|           +-- SKILL.md
 |
-+-- beat-archive/            <-- Your document archive (Module 4)
-    +-- README.md                Instructions for adding documents
+|-- scripts/
+|   |-- pipeline/               Staged pipeline (Module 3)
+|   |   |-- 01-fetch.sh
+|   |   |-- 02-clean.sh
+|   |   |-- 03-process.sh
+|   |   |-- 04-save.sh
+|   |   |-- run-all.sh
+|   |   +-- README.md
+|   +-- legacy/                 The "before" version of the scripts
+|       |-- summarize-article.sh
+|       |-- batch-process.sh
+|       +-- README.md
+|
+|-- .github/workflows/
+|   |-- weekly-digest.yml       Scheduled pipeline (Module 3, video C2)
+|   +-- README.md
+|
+|-- examples/
+|   |-- worked-claude-md/       A fully filled-in CLAUDE.md example
+|   |   +-- CLAUDE.md
+|   |-- mamdani-mini/           The video B1 pipeline shape, synthetic data
+|   |   |-- README.md
+|   |   |-- sample-data/
+|   |   |-- prompts/
+|   |   +-- dashboard-skeleton.html
+|   +-- rag-archive/            Optional: local RAG over your own docs
+|       +-- README.md
+|
+|-- mcp-configs/                Optional advanced: MCP examples
+|   |-- README.md
+|   +-- filesystem-example.json
+|
+|-- docs/
+|   |-- module-map.md           File-to-video index
+|   |-- context-management.md   Module 4: /effort, /context, /compact, sub-agents
+|   |-- cross-model-review.md   Module 4: Copilot CLI and Codex with -p
+|   |-- four-questions.md       Module 4: tool selection framework
+|   +-- superpowers/specs/      Design docs for the kit itself
+|
++-- og-image.png                Social preview
 ```
-
-## Which module uses what
-
-| Module | Week | What you'll work with |
-|--------|------|-----------------------|
-| **1 — From chat window to command line** | 1 | `CLAUDE.md`, `sample-docs/` |
-| **2 — Custom skills** | 2 | `skills/`, plus new skills you create |
-| **3 — CLI workflows** | 3 | `scripts/`, plus pipelines you build |
-| **4 — Agents, tools, and data access** | 4 | `mcp-configs/`, `beat-archive/`, final project |
 
 ## Related repositories
 
-- **[Journalism skills library](https://github.com/jamditis/claude-skills-journalism)** — 36 pre-built Claude Code skills for journalism (source verification, FOIA requests, data journalism, editorial workflows). Browse for ideas or install individual skills.
-- **[NICAR 2026: Skills in Codex and Claude](https://github.com/amkessler/nicar2026_skills_in_codex_claude)** — Aaron Kessler's NICAR session repo with examples of building and using skills across Claude Code and OpenAI Codex CLI for data journalism workflows.
+- **[Journalism skills library](https://github.com/jamditis/claude-skills-journalism)** — 38 pre-built Claude Code skills for journalism (source verification, FOIA requests, data journalism, editorial workflows, newsroom style, web archiving, and more) plus 13 workflow hooks. Browse for ideas or install the whole library.
+- **[NICAR 2026: Skills in Codex and Claude](https://github.com/amkessler/nicar2026_skills_in_codex_claude)** — Aaron Kessler's NICAR session repo. Examples of building and using skills across Claude Code and Codex CLI for data journalism.
 - **[AI tools for newsrooms](https://github.com/jamditis/tools)** — A curated collection of AI tools and resources for journalists and newsrooms.
+- **[skills.amditis.tech](https://skills.amditis.tech)** — Browsable catalog of Joe's skills and plugins, including the ones demoed in the course videos.
+- **[tools.amditis.tech](https://tools.amditis.tech)** — Joe's working list of AI tools for journalists.
 
 ## License
 
