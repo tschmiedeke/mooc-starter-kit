@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Councilmember Reyes — content analysis dashboard</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23202c3a'/><rect x='22' y='30' width='56' height='40' rx='4' fill='%23f4f6f8'/><circle cx='50' cy='50' r='10' fill='%23202c3a'/></svg>">
+
+  <meta property="og:title" content="Councilmember Reyes — content analysis dashboard">
+  <meta property="og:description" content="Static skeleton showing the shape of a social media content analysis dashboard for a fictional local council member. Pedagogical example from the mooc-starter-kit.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/mamdani-mini/dashboard-skeleton.html">
+  <meta property="og:image" content="https://example.com/mamdani-mini/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Councilmember Reyes — content analysis dashboard">
+  <meta name="twitter:description" content="Static skeleton showing the shape of a social media content analysis dashboard for a fictional local council member.">
+  <meta name="twitter:image" content="https://example.com/mamdani-mini/og-image.png">
+
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --ink: #14202c;
+      --muted: #5c6b7a;
+      --line: #dbe1e8;
+      --accent: #2d6cdf;
+      --accent-soft: #e6efff;
+      --positive: #2e7d57;
+      --negative: #b33a3a;
+      --neutral: #7a8693;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+    header.page {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 20px;
+      margin-bottom: 32px;
+    }
+    header.page h1 {
+      font-size: 28px;
+      margin: 0 0 6px;
+      letter-spacing: -0.01em;
+    }
+    header.page p.kicker {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .meta-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .meta-row span strong { color: var(--ink); display: block; font-size: 18px; }
+    section {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    section h2 {
+      font-size: 18px;
+      margin: 0 0 16px;
+      letter-spacing: -0.005em;
+    }
+    .search-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .search-row input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      font-size: 15px;
+      background: #fafbfc;
+    }
+    .search-row input:disabled {
+      cursor: not-allowed;
+      color: var(--muted);
+    }
+    .search-row .hint {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+    }
+    .card .thumb {
+      height: 140px;
+      background: linear-gradient(135deg, #c4d2e6, #8aa6c6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: lowercase;
+    }
+    .card .body {
+      padding: 14px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card h3 {
+      font-size: 15px;
+      margin: 0 0 6px;
+      line-height: 1.35;
+    }
+    .card .meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .card .summary {
+      font-size: 13px;
+      color: var(--ink);
+      margin: 0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      background: var(--accent-soft);
+      color: var(--accent);
+      margin-right: 6px;
+    }
+    .bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 50px;
+      gap: 12px;
+      align-items: center;
+      font-size: 13px;
+    }
+    .bar {
+      height: 14px;
+      background: var(--accent-soft);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .bar > span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      background: var(--accent);
+      border-radius: 4px;
+    }
+    .bar-row .count {
+      text-align: right;
+      color: var(--muted);
+    }
+    .sentiment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .sentiment-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .sentiment-card h4 {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .sentiment-card .value {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .sentiment-card .value.positive { color: var(--positive); }
+    .sentiment-card .value.negative { color: var(--negative); }
+    .sentiment-card .value.neutral  { color: var(--neutral); }
+    .sentiment-card .note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    table th, table td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    table th {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    ul.claims {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    ul.claims li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+    }
+    ul.claims li:last-child { border-bottom: none; }
+    ul.claims .source {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    footer.page {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="page">
+      <h1>Councilmember Reyes — content analysis dashboard</h1>
+      <p class="kicker">District 4, Greenfield City Council. Recent social video activity.</p>
+      <div class="meta-row">
+        <span><strong>5</strong>videos analyzed</span>
+        <span><strong>March 4–26, 2026</strong>date range</span>
+        <span><strong>16:07</strong>total runtime</span>
+        <span><strong>3</strong>platforms</span>
+      </div>
+    </header>
+
+    <section>
+      <h2>Transcript search</h2>
+      <div class="search-row">
+        <input type="text" placeholder="Filter videos by transcript content" disabled>
+        <span class="hint">Disabled in this skeleton — populated in the live dashboard</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>Video catalog</h2>
+      <div class="grid">
+
+        <div class="card">
+          <div class="thumb">youtube · 4:47</div>
+          <div class="body">
+            <h3>Where your tax dollars go: my budget priorities for District 4</h3>
+            <p class="meta"><span class="badge">budget</span>Mar 4 · 4,218 views</p>
+            <p class="summary">Reyes outlines a $4.8M parks-and-recreation request, sourced from unrestricted reserves now sitting near $17M.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="thumb">tiktok · 1:36</div>
+          <div class="body">
+            <h3>Why I voted to close Riverside Park (yes, really)</h3>
+            <p class="meta"><span class="badge">parks</span>Mar 9 · 28,714 views</p>
+            <p class="summary">Defends the four-month closure as the cheaper alternative to an emergency repair. Cites the city engineer.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="thumb">twitter · 2:22</div>
+          <div class="body">
+            <h3>About the contractor — answering your questions</h3>
+            <p class="meta"><span class="badge">accountability</span>Mar 14 · 9,156 views</p>
+            <p class="summary">Walks through the bidding process for Meridian Infrastructure and addresses the 2023 East Side library delay.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="thumb">youtube · 6:04</div>
+          <div class="body">
+            <h3>Riding the 14 bus to Lincoln Park — what's missing</h3>
+            <p class="meta"><span class="badge">transit</span>Mar 19 · 6,402 views</p>
+            <p class="summary">On-the-bus walkthrough flagging gaps in the relocation plan. Proposes shuttles, shelters, and fare coverage.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="thumb">tiktok · 1:18</div>
+          <div class="body">
+            <h3>Town hall clip: a District 4 mom asks about playground safety</h3>
+            <p class="meta"><span class="badge">safety</span>Mar 26 · 15,893 views</p>
+            <p class="summary">Cites the ASTM F1487 standard for the new equipment and offers to share spec sheets with parents.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <h2>Topic distribution</h2>
+      <div class="bar-chart">
+        <div class="bar-row"><span>Riverside Park project</span><div class="bar"><span style="width:92%"></span></div><span class="count">5</span></div>
+        <div class="bar-row"><span>Budget and reserves</span><div class="bar"><span style="width:60%"></span></div><span class="count">3</span></div>
+        <div class="bar-row"><span>Public safety</span><div class="bar"><span style="width:48%"></span></div><span class="count">2</span></div>
+        <div class="bar-row"><span>Transit access</span><div class="bar"><span style="width:42%"></span></div><span class="count">2</span></div>
+        <div class="bar-row"><span>Contractor accountability</span><div class="bar"><span style="width:36%"></span></div><span class="count">2</span></div>
+        <div class="bar-row"><span>Constituent engagement</span><div class="bar"><span style="width:30%"></span></div><span class="count">2</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Sentiment overview</h2>
+      <div class="sentiment-grid">
+        <div class="sentiment-card">
+          <h4>Overall tone</h4>
+          <div class="value neutral">Mixed</div>
+          <div class="note">Defensive on contractor, warm on town hall, urgent on transit</div>
+        </div>
+        <div class="sentiment-card">
+          <h4>Toward subject (self)</h4>
+          <div class="value positive">Positive</div>
+          <div class="note">Consistent first-person framing; takes ownership of votes</div>
+        </div>
+        <div class="sentiment-card">
+          <h4>Toward city administration</h4>
+          <div class="value neutral">Neutral</div>
+          <div class="note">Names the city engineer and Parks director without praise or attack</div>
+        </div>
+        <div class="sentiment-card">
+          <h4>Toward Meridian Infrastructure</h4>
+          <div class="value neutral">Neutral / cautious</div>
+          <div class="note">Defends the bidding process; reserves judgment on performance</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Cross-platform comparison</h2>
+      <table>
+        <thead>
+          <tr><th>Platform</th><th>Videos</th><th>Avg duration</th><th>Total views</th><th>Top theme</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>YouTube</td><td>2</td><td>5:25</td><td>10,620</td><td>Budget and transit deep-dives</td></tr>
+          <tr><td>TikTok</td><td>2</td><td>1:27</td><td>44,607</td><td>Direct-to-camera explainers</td></tr>
+          <tr><td>Twitter</td><td>1</td><td>2:22</td><td>9,156</td><td>Contractor accountability</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Claims to verify</h2>
+      <ul class="claims">
+        <li>$4.8 million parks request, with $2.3M for Riverside and $2.5M for Lincoln Park, summer programming, and a part-time forestry position.<span class="source">video-01 — budget priorities</span></li>
+        <li>City unrestricted reserves are sitting near $17 million; reserve floor was set at 10% in 2022.<span class="source">video-01 — budget priorities</span></li>
+        <li>Meridian Infrastructure was the lowest qualified bidder by ~$180,000 on a $2.3M job; three firms bid.<span class="source">video-03 — contractor</span></li>
+        <li>East Side library project (2023) ran six weeks over schedule due to a steel framing supply chain issue, not a Meridian crew problem.<span class="source">video-03 — contractor</span></li>
+        <li>The 14 bus runs every 35 minutes on weekday afternoons; new bus shelters cost ~$12,000 each, per Public Works.<span class="source">video-04 — transit</span></li>
+        <li>The new playground equipment will meet ASTM F1487; the existing equipment dates to 2004 and has been flagged twice by safety inspectors.<span class="source">video-02, video-05 — parks and safety</span></li>
+        <li>Youth sports relocation to Memorial Field is in the closure plan; Riverside Community Center stays open during construction.<span class="source">video-02 — parks</span></li>
+      </ul>
+    </section>
+
+    <footer class="page">
+      This is a skeleton. In the real B1 demo, a full interactive dashboard is generated from the pipeline output — populated with live transcripts, OCR'd video frames, and platform-specific charts. Everything here is synthetic data about a fictional council member, used only to show the shape.
+    </footer>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "video-01",
+    "title": "Where your tax dollars go: my budget priorities for District 4",
+    "platform": "youtube",
+    "url": "https://youtube.com/watch?v=fake-RYS01budget",
+    "duration_seconds": 287,
+    "posted_at": "2026-03-04",
+    "views": 4218,
+    "description": "Councilmember Reyes walks through her budget priorities for the upcoming fiscal year, including her $4.8 million parks request.",
+    "thumbnail_url": "https://example.invalid/thumbs/video-01.jpg"
+  },
+  {
+    "id": "video-02",
+    "title": "Why I voted to close Riverside Park (yes, really)",
+    "platform": "tiktok",
+    "url": "https://tiktok.com/@yvonnereyes/video/fake-RYS02park",
+    "duration_seconds": 96,
+    "posted_at": "2026-03-09",
+    "views": 28714,
+    "description": "Reyes explains her vote on the Riverside Park closure and what the four-month timeline means for District 4 families.",
+    "thumbnail_url": "https://example.invalid/thumbs/video-02.jpg"
+  },
+  {
+    "id": "video-03",
+    "title": "About the contractor — answering your questions",
+    "platform": "twitter",
+    "url": "https://twitter.com/yvonnereyes/status/fake-RYS03contractor",
+    "duration_seconds": 142,
+    "posted_at": "2026-03-14",
+    "views": 9156,
+    "description": "Reyes responds directly to constituent concerns about Meridian Infrastructure being awarded the Riverside Park contract.",
+    "thumbnail_url": "https://example.invalid/thumbs/video-03.jpg"
+  },
+  {
+    "id": "video-04",
+    "title": "Riding the 14 bus to Lincoln Park — what's missing",
+    "platform": "youtube",
+    "url": "https://youtube.com/watch?v=fake-RYS04transit",
+    "duration_seconds": 364,
+    "posted_at": "2026-03-19",
+    "views": 6402,
+    "description": "Reyes rides the 14 bus from her district to Lincoln Park and talks about transit gaps during the Riverside closure.",
+    "thumbnail_url": "https://example.invalid/thumbs/video-04.jpg"
+  },
+  {
+    "id": "video-05",
+    "title": "Town hall clip: a District 4 mom asks about playground safety",
+    "platform": "tiktok",
+    "url": "https://tiktok.com/@yvonnereyes/video/fake-RYS05townhall",
+    "duration_seconds": 78,
+    "posted_at": "2026-03-26",
+    "views": 15893,
+    "description": "Clip from the March 25 District 4 town hall: a parent asks Councilmember Reyes about playground safety standards in the new design.",
+    "thumbnail_url": "https://example.invalid/thumbs/video-05.jpg"
+  }
+]
